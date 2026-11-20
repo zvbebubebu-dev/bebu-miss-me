@@ -1,0 +1,555 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Pacifico&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  color: #81445d;
+  background: linear-gradient(135deg, #ffe1ed, #fff5f8);
+}
+
+button, input {
+  font-family: 'Poppins', sans-serif;
+}
+
+.hug-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.floating-hearts {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+  opacity: .65;
+  animation: float 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hug-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 35px 28px;
+  background: rgba(255,255,255,.92);
+  border: 2px solid #ffe0eb;
+  border-radius: 30px;
+  box-shadow: 0 15px 40px rgba(195,100,140,.15);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.top-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #d47b9d;
+}
+
+h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: 32px;
+  font-weight: 400;
+  color: #c75f89;
+  margin: 15px 0 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #a87589;
+}
+
+/* TEDDY BEARS */
+
+.bear-scene {
+  height: 190px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 25px 0;
+}
+
+.bear {
+  position: absolute;
+  font-size: 85px;
+  transition: transform .7s ease;
+  z-index: 2;
+}
+
+.bear-left {
+  left: 22%;
+}
+
+.bear-right {
+  right: 22%;
+  transform: scaleX(-1);
+}
+
+.bear-name {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: 700;
+  color: #d66e96;
+  background: #fff0f5;
+  padding: 2px 12px;
+  border-radius: 20px;
+  box-shadow: 0 3px 8px rgba(195,100,140,.15);
+}
+
+.bear-right .bear-name {
+  transform: translateX(-50%) scaleX(-1);
+}
+
+.hug-heart {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 30px;
+  animation: heartPop 1.5s ease-in-out infinite;
+  z-index: 3;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 23px;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.sparkle-one {
+  top: 35px;
+  left: 15%;
+}
+
+.sparkle-two {
+  bottom: 25px;
+  right: 15%;
+  animation-delay: .8s;
+}
+
+/* HUG ANIMATIONS */
+
+/* Sender moves toward the middle while waiting */
+
+.bear-scene.waiting.sender-left .bear-left {
+  transform: translateX(65px);
+}
+
+.bear-scene.waiting.sender-right .bear-right {
+  transform: translateX(-65px) scaleX(-1);
+}
+
+/* Both bears hug */
+
+.bear-scene.hugging .bear-left {
+  transform: translateX(45px) rotate(-8deg);
+}
+
+.bear-scene.hugging .bear-right {
+  transform: translateX(-45px) scaleX(-1) rotate(-8deg);
+}
+
+/* Sender gives a solo hug after timeout */
+
+.bear-scene.solo-hug.sender-left .bear-left {
+  transform: translateX(85px) scale(1.08) rotate(-8deg);
+}
+
+.bear-scene.solo-hug.sender-right .bear-right {
+  transform: translateX(-85px) scaleX(-1) scale(1.08) rotate(-8deg);
+}
+
+.bear-scene.hugging .hug-heart,
+.bear-scene.solo-hug .hug-heart {
+  font-size: 42px;
+}
+
+/* STATUS */
+
+.status-box {
+  background: #fff1f6;
+  border: 1px solid #ffdae8;
+  border-radius: 20px;
+  padding: 18px 12px;
+  margin: 20px 0;
+}
+
+.status-box p {
+  margin: 5px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #986078;
+}
+
+#statusTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #c75f89;
+}
+
+.countdown {
+  font-size: 34px;
+  font-weight: 800;
+  color: #d45f91;
+  margin: 10px 0;
+  letter-spacing: 2px;
+}
+
+#timerLabel {
+  font-size: 12px;
+  color: #b47b93;
+}
+
+/* BUTTONS */
+
+.hug-button,
+.secondary-button,
+.request-button {
+  width: 100%;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 18px;
+  margin: 7px 0;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.hug-button {
+  color: white;
+  background: linear-gradient(135deg, #f28bb2, #d85f91);
+  box-shadow: 0 5px 15px rgba(216,95,145,.25);
+}
+
+.request-button {
+  color: white;
+  background: linear-gradient(135deg, #b98be8, #9870d0);
+  box-shadow: 0 5px 15px rgba(152,112,208,.2);
+}
+
+.secondary-button {
+  color: white;
+  background: linear-gradient(135deg, #b98be8, #9870d0);
+}
+
+.choice-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hug-button:hover:not(:disabled),
+.secondary-button:hover:not(:disabled),
+.request-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  filter: brightness(1.04);
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* HUG MESSAGE */
+
+.hug-message {
+  font-size: 13px;
+  font-weight: 600;
+  color: #bd6c8e;
+  margin: 18px 0;
+  line-height: 1.7;
+}
+
+/* STATISTICS */
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.stat {
+  flex: 1;
+  background: #fff1f6;
+  border-radius: 18px;
+  padding: 15px 8px;
+  border: 1px solid #ffe0eb;
+}
+
+.stat-number {
+  display: block;
+  font-size: 25px;
+  font-weight: 800;
+  color: #d45f91;
+}
+
+.stat-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #a87589;
+}
+
+/* HUG MEMORIES */
+
+.history-section {
+  text-align: left;
+  margin-top: 30px;
+}
+
+.history-section h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #c75f89;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+#hugHistory {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.empty-history {
+  text-align: center;
+  font-size: 12px;
+  color: #b98a9e;
+  padding: 15px;
+  background: #fff6f9;
+  border-radius: 15px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: #fff1f6;
+  border: 1px solid #ffe0eb;
+  border-radius: 14px;
+  font-size: 13px;
+}
+
+.history-item div {
+  flex: 1;
+  min-width: 0;
+}
+
+.history-item strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #a85d7d;
+}
+
+.history-item small {
+  display: block;
+  font-size: 10px;
+  color: #bd91a4;
+  margin-top: 4px;
+}
+
+/* FOOTER */
+
+.footer {
+  margin-top: 30px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #c1849e;
+}
+
+/* LOGIN */
+
+#loginSection {
+  width: 100%;
+}
+
+#loginSection[hidden],
+#hugSection[hidden] {
+  display: none !important;
+}
+
+.login-bears {
+  font-size: 55px;
+  margin: 25px 0;
+  animation: float 3s ease-in-out infinite;
+}
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin-top: 25px;
+}
+
+#loginForm input {
+  width: 100%;
+  padding: 15px 17px;
+  border: 1px solid #f4c9da;
+  border-radius: 15px;
+  outline: none;
+  background: #fff7fa;
+  color: #81445d;
+  font-size: 14px;
+  transition: border .2s ease, box-shadow .2s ease;
+}
+
+#loginForm input:focus {
+  border-color: #d8759b;
+  box-shadow: 0 0 0 3px rgba(216,117,155,.12);
+}
+
+#loginForm input::placeholder {
+  color: #c49aaa;
+}
+
+.login-message {
+  min-height: 20px;
+  margin-top: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #c75f89;
+}
+
+/* ACCOUNT BAR */
+
+.account-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 5px;
+  padding: 10px 14px;
+  background: #fff1f6;
+  border: 1px solid #ffe0eb;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #b45e82;
+}
+
+.logout-button {
+  border: none;
+  border-radius: 20px;
+  padding: 7px 13px;
+  background: #f7d9e5;
+  color: #a34f73;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.logout-button:hover {
+  background: #f2c5d7;
+  transform: translateY(-2px);
+}
+
+/* ANIMATIONS */
+
+@keyframes heartPop {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.3);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: .5;
+    transform: scale(.8) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(20deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+  .hug-page {
+    padding: 25px 12px;
+  }
+
+  .hug-card {
+    padding: 28px 18px;
+    border-radius: 24px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+
+  .bear {
+    font-size: 75px;
+  }
+
+  .bear-left {
+    left: 18%;
+  }
+
+  .bear-right {
+    right: 18%;
+  }
+
+  .stats {
+    gap: 8px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+
+  .hug-button,
+  .secondary-button,
+  .request-button {
+    font-size: 12px;
+  }
+
+  #loginForm input {
+    font-size: 13px;
+    padding: 13px 15px;
+  }
+
+  .login-bears {
+    font-size: 48px;
+  }
+
+  .account-bar {
+    font-size: 11px;
+  }
+}
