@@ -13,7 +13,8 @@ body {
   background: linear-gradient(135deg, #ffe1ed, #fff5f8);
 }
 
-button, input {
+button,
+input {
   font-family: 'Poppins', sans-serif;
 }
 
@@ -81,12 +82,11 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 25px 0;
+  margin: 35px 0 25px;
 }
 
 .bear {
   position: absolute;
-  font-size: 85px;
   transition: transform .7s ease;
   z-index: 2;
 }
@@ -98,6 +98,13 @@ h1 {
 .bear-right {
   right: 22%;
   transform: scaleX(-1);
+}
+
+.bear-image {
+  display: block;
+  width: 100px;
+  height: 135px;
+  object-fit: contain;
 }
 
 .bear-name {
@@ -115,6 +122,38 @@ h1 {
 }
 
 .bear-right .bear-name {
+  transform: translateX(-50%) scaleX(-1);
+}
+
+/* SPEECH BUBBLES - LAPTOP AND MOBILE */
+
+.bear-speech {
+  position: absolute;
+  top: -38px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  width: max-content;
+  max-width: 170px;
+  padding: 7px 11px;
+  border: 1px solid #ffd2e2;
+  border-radius: 18px;
+  background: #ffe5ef;
+  color: #a94e75;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-align: center;
+  box-shadow: 0 3px 12px rgba(180,90,130,.15);
+  z-index: 10;
+}
+
+.bear-speech.show {
+  display: block;
+}
+
+.bear-right .bear-speech {
   transform: translateX(-50%) scaleX(-1);
 }
 
@@ -147,8 +186,6 @@ h1 {
 
 /* HUG ANIMATIONS */
 
-/* Sender moves toward the middle while waiting */
-
 .bear-scene.waiting.sender-left .bear-left {
   transform: translateX(65px);
 }
@@ -157,8 +194,6 @@ h1 {
   transform: translateX(-65px) scaleX(-1);
 }
 
-/* Both bears hug */
-
 .bear-scene.hugging .bear-left {
   transform: translateX(45px) rotate(-8deg);
 }
@@ -166,8 +201,6 @@ h1 {
 .bear-scene.hugging .bear-right {
   transform: translateX(-45px) scaleX(-1) rotate(-8deg);
 }
-
-/* Sender gives a solo hug after timeout */
 
 .bear-scene.solo-hug.sender-left .bear-left {
   transform: translateX(85px) scale(1.08) rotate(-8deg);
@@ -211,6 +244,7 @@ h1 {
   color: #d45f91;
   margin: 10px 0;
   letter-spacing: 2px;
+  font-variant-numeric: tabular-nums;
 }
 
 #timerLabel {
@@ -514,8 +548,9 @@ button:disabled {
     font-size: 27px;
   }
 
-  .bear {
-    font-size: 75px;
+  .bear-image {
+    width: 90px;
+    height: 120px;
   }
 
   .bear-left {
@@ -524,6 +559,12 @@ button:disabled {
 
   .bear-right {
     right: 18%;
+  }
+
+  .bear-speech {
+    top: -34px;
+    font-size: 10px;
+    padding: 6px 9px;
   }
 
   .stats {

@@ -65,26 +65,30 @@ document.querySelector('#app').innerHTML = `
           <button id="logoutButton" class="logout-button">Logout</button>
         </div>
 
-        <div class="bear-scene" id="bearScene">
-          <div class="bear bear-left">
-            🧸
-            <span class="bear-name">Z</span>
-          </div>
-          <div class="bear bear-right">
-            🧸
-            <span class="bear-name">V</span>
-          </div>
-          <div class="hug-heart">💗</div>
-          <div class="sparkle sparkle-one">✨</div>
-          <div class="sparkle sparkle-two">💕</div>
-        </div>
+  <div class="bear-scene" id="bearScene">
+  <div class="bear bear-left">
+    <span class="bear-speech" id="zSpeech"></span>
+    <img src="/assets/z-brown.png" class="bear-image" alt="Z brown teddy bear">
+    <span class="bear-name">Z</span>
+  </div>
+
+  <div class="bear bear-right">
+    <span class="bear-speech" id="vSpeech"></span>
+    <img src="/assets/v-white.png" class="bear-image" alt="V white teddy bear">
+    <span class="bear-name">V</span>
+  </div>
+
+  <div class="hug-heart">💗</div>
+  <div class="sparkle sparkle-one">✨</div>
+  <div class="sparkle sparkle-two">💕</div>
+</div>
 
         <div class="status-box">
-          <p id="statusTitle">Missing your bebu?</p>
-          <p id="statusText">What kind of hug do you need today?</p>
-          <div id="countdown" class="countdown">♡</div>
-          <p id="timerLabel">Choose your little hug 💗</p>
-        </div>
+  <p id="statusTitle">Missing your bebu?</p>
+  <p id="statusText">What kind of hug do you need today?</p>
+  <div id="countdown" class="countdown">04:00</div>
+  <p id="timerLabel">Choose your little hug 💗</p>
+</div>
 
         <div id="choiceButtons" class="choice-buttons">
           <button id="sendHugButton" class="hug-button">
@@ -141,6 +145,8 @@ const sendHugButton = $('sendHugButton')
 const requestHugButton = $('requestHugButton')
 const hugBackButton = $('hugBackButton')
 const bearScene = $('bearScene')
+const zSpeech = $('zSpeech')
+const vSpeech = $('vSpeech')
 
 const statusTitle = $('statusTitle')
 const statusText = $('statusText')
@@ -175,6 +181,36 @@ function escapeHTML(value) {
 
 function getSenderSide(hug) {
   return USERS[hug.fromUid] === 'Z' ? 'left' : 'right'
+}
+
+function showBearMessages(hug, returned = false) {
+  zSpeech.textContent = ''
+  vSpeech.textContent = ''
+
+  zSpeech.classList.remove('show')
+  vSpeech.classList.remove('show')
+
+  const senderRole = USERS[hug.fromUid]
+  const receiverRole = USERS[hug.toUid]
+
+  const senderBubble = senderRole === 'Z' ? zSpeech : vSpeech
+  const receiverBubble = receiverRole === 'Z' ? zSpeech : vSpeech
+
+  senderBubble.textContent = 'I miss you! 💗'
+  senderBubble.classList.add('show')
+
+  if (returned) {
+    receiverBubble.textContent = 'I miss you too! 💗'
+    receiverBubble.classList.add('show')
+  }
+}
+
+function hideBearMessages() {
+  zSpeech.textContent = ''
+  vSpeech.textContent = ''
+
+  zSpeech.classList.remove('show')
+  vSpeech.classList.remove('show')
 }
 
 // EMAIL NOTIFICATION
@@ -289,12 +325,14 @@ function showResult(type) {
 
   if (type === 'returned') {
     animateHug('hugging')
+    showBearMessages(activeHug, true)
     statusTitle.textContent = 'A hug from both of you! 💕'
     statusText.textContent = 'Your bebus hugged each other!'
     countdown.textContent = '💗'
     timerLabel.textContent = 'A perfect little moment.'
     hugMessage.textContent = 'You hugged each other. Sending more love! 🧸❤️'
   } else {
+    animateHug('solo-hug', getSenderSide(activeHug))
     animateHug('solo-hug', getSenderSide(activeHug))
     statusTitle.textContent = 'A hug is on its way! 🧸'
     statusText.textContent = 'Your bebu may be busy, but love is still here.'
@@ -306,6 +344,7 @@ function showResult(type) {
   clearTimeout(terminalTimer)
   terminalTimer = setTimeout(() => {
     resetDisplay()
+    hideBearMessages()
   }, 4000)
 }
 
@@ -314,8 +353,9 @@ function showWaitingState() {
 
   updateButtons()
 
-  const senderSide = getSenderSide(activeHug)
-  animateHug('waiting', senderSide)
+ const senderSide = getSenderSide(activeHug)
+animateHug('waiting', senderSide)
+showBearMessages(activeHug)
 
   const isReceiver = activeHug.toUid === currentUser.uid
 
@@ -411,7 +451,7 @@ async function createHug(mode) {
           toName: receiverRole,
           status: 'waiting',
           createdAt: now,
-          expiresAt: now + 10000
+          expiresAt: now + 240000
         },
         stats: {
           sent: (oldStats.sent || 0) + (mode === 'send' ? 1 : 0),
